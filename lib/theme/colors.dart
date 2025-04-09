@@ -10,6 +10,6 @@ class AppColors {
   static const footerGrey = Color(0xFF737373);
   static const proButton = Color.fromRGBO(47, 48, 47, 1);
   static const cardColor = Color(0xFF262626);
-  static const submitButton = Color.fromRGBO(27, 185, 206, 1);
+  static const submitButton = Color.fromRGBO(146, 94, 194, 1);
   static const whiteColor = Colors.white;
 }
