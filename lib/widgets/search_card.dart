@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:perplexity_clone/services/chat_web_service.dart';
 import 'package:perplexity_clone/theme/colors.dart';
 import 'package:perplexity_clone/widgets/search_bar_button.dart';
 
-class SearchCard extends StatelessWidget {
+class SearchCard extends StatefulWidget {
   const SearchCard({super.key});
+
+  @override
+  State<SearchCard> createState() => _SearchCardState();
+}
+
+class _SearchCardState extends State<SearchCard> {
+  final queryController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    queryController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +44,7 @@ class SearchCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: TextField(
+                  controller: queryController,
                   decoration: InputDecoration(
                     hintText: "Search anything...",
                     hintStyle: TextStyle(color: AppColors.textGrey, fontSize: 16),
@@ -47,13 +62,18 @@ class SearchCard extends StatelessWidget {
                     const SizedBox(width: 32,),
                     SearchBarButton(icon: Icons.add_circle_outline, label: 'Attach'),
                     const Spacer(),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: AppColors.submitButton,
-                        borderRadius: BorderRadius.circular(40),
+                    GestureDetector(
+                      onTap: () {
+                        ChatWebService().chat(queryController.text.trim());
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: AppColors.submitButton,
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        child: const Icon(Icons.arrow_forward, color: AppColors.background, size: 16,),
                       ),
-                      child: const Icon(Icons.arrow_forward, color: AppColors.background, size: 16,),
                     )
                   ],
                 ),
