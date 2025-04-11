@@ -5,3 +5,4 @@ load_dotenv()
 
 class Settings(BaseSettings):
     TAVILY_API: str = ""
+    GEMINI_API: str = ""

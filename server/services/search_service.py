@@ -13,16 +13,20 @@ class SearchService:
         # create different queries to search google
         # or tavily
         results = []
-        response = tavily_client.search(query, max_results=5)
-        search_results = response.get("results", [])
+        try:
+            response = tavily_client.search(query, max_results=5)
+            search_results = response.get("results", [])
 
-        for result in search_results:
-            downloaded_content = trafilatura.fetch_url(result.get('url'))
-            content = trafilatura.extract(downloaded_content, include_comments=False)
-            results.append({
-                "title": result.get("title", ""),
-                "url": result.get("url"),
-                "content": content,
-            })
-
-        return results
+            for result in search_results:
+                downloaded_content = trafilatura.fetch_url(result.get('url'))
+                content = trafilatura.extract(downloaded_content, include_comments=False)
+                results.append({
+                    "title": result.get("title", ""),
+                    "url": result.get("url"),
+                    "content": content,
+                })
+            return results
+        
+        except Exception as e:
+            print("Unexpected error in Search Service occurred: ", e)
+            return []
